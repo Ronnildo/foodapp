@@ -1,20 +1,14 @@
 import 'package:cardapioapp/src/domain/models/snacks_models.dart';
-import 'package:cardapioapp/src/ui/home/viewmodels/home_viewmodel.dart';
+import 'package:cardapioapp/src/ui/details/widgets/details_page.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class ListItensWidget extends StatefulWidget {
-  final String name;
-  final String description;
-  final double price;
-
   final List<SnacksModels> snacks;
+  final String type;
   const ListItensWidget({
     super.key,
     required this.snacks,
-    required this.name,
-    required this.description,
-    required this.price,
+    required this.type,
   });
 
   @override
@@ -39,10 +33,23 @@ class _ListItensWidgetState extends State<ListItensWidget> {
         right: 16,
       ),
       itemBuilder: (context, index) {
-        return cardContent(
-          widget.snacks[index].name!,
-          widget.snacks[index].descricao!,
-          widget.snacks[index].price!,
+        return GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => DetailsPage(
+                  snack: widget.snacks[index],
+                  type: widget.type,
+                ),
+              ),
+            );
+          },
+          child: cardContent(
+            widget.snacks[index].name!,
+            widget.snacks[index].descricao!,
+            widget.snacks[index].price!,
+          ),
         );
       },
     );
@@ -67,7 +74,7 @@ class _ListItensWidgetState extends State<ListItensWidget> {
           ),
           Center(
             child: Image(
-              image: AssetImage("assets/images/burger.png"),
+              image: AssetImage(typeSnack(widget.type)),
               width: 120,
               height: 80,
             ),
@@ -109,4 +116,26 @@ class _ListItensWidgetState extends State<ListItensWidget> {
       ),
     );
   }
+
+  String typeSnack(String type) {
+    switch (type) {
+      case "Burgers":
+        return "assets/images/burger.png";
+      case "Chinkens":
+        return "assets/images/chicken.png";
+      case "Fries":
+        return "assets/images/fries.png";
+      case "Drinks":
+        return "assets/images/drink.png";
+      case "":
+        return "assets/images/not_image.png";
+      default:
+        return "";
+    }
+  }
+
+  /** {"nome": "Burgers", "img": "assets/images/burger.png"},
+    {"nome": "Chinkens", "img": "assets/images/chicken.png"},
+    {"nome": "Fries", "img": "assets/images/fries.png"},
+    {"nome": "Drinks", "img": "assets/images/drink.png"}, */
 }

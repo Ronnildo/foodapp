@@ -1,6 +1,7 @@
 import 'package:cardapioapp/src/ui/details/widgets/details_page.dart';
 import 'package:cardapioapp/src/ui/home/viewmodels/home_viewmodel.dart';
 import 'package:cardapioapp/src/ui/home/widget/card_widget.dart';
+import 'package:cardapioapp/src/ui/menu/widget/insert_snack_page.dart';
 import 'package:cardapioapp/src/ui/menu/widget/menu_page.dart';
 // import 'package:cardapioapp/src/ui/widgets/list_itens_widget.dart';
 import 'package:cardapioapp/src/ui/home/widget/snack_list_widget.dart';
@@ -72,11 +73,7 @@ class _HomePageState extends State<HomePage> {
             spacing: 20,
             children: [
               CardWidget(),
-              SizedBox(
-                  height: 100,
-                  child: SnackListWidget(
-                    onTap: menus,
-                  )),
+              SizedBox(height: 100, child: SnackListWidget()),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 spacing: 50,
@@ -97,12 +94,9 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
               ListItensWidget(
-                name: "name",
-                description: "description",
-                price: 2,
                 snacks: viewModel.snacks,
+                type: "Burgers",
               ),
-              // GestureDetector(onTap: details, child: ListItensWidget())
             ],
           ),
         ),
@@ -123,17 +117,16 @@ class _HomePageState extends State<HomePage> {
               icon: Icon(Icons.shopping_bag_outlined, color: Colors.grey),
               label: "Buy"),
           BottomNavigationBarItem(
-              icon: Icon(Icons.person, color: Colors.grey), label: "Person"),
+              icon: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => InsertSnackPage()),
+                    );
+                  },
+                  child: Icon(Icons.person, color: Colors.grey)),
+              label: "Person"),
         ]));
-  }
-
-  details() {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => DetailsPage()));
-  }
-
-  menus() {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => MenuPage()));
   }
 }

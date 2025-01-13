@@ -11,8 +11,8 @@ class HomeViewmodel extends ChangeNotifier{
 
   List<SnacksModels> get snacks => _snacks;
 
-  Future<void> listBurgers() async {
-    List<SnacksModels> data = await snacksRepository.read("burgers");
+  Future<void> listSnacks(String snack) async {
+    List<SnacksModels> data = await snacksRepository.read(snack);
     // print(data);
     _snacks = data;
     notifyListeners();

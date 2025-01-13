@@ -1,8 +1,10 @@
+import 'package:cardapioapp/src/ui/menu/widget/menu_page.dart';
 import 'package:flutter/material.dart';
 
 class SnackListWidget extends StatefulWidget {
-  final void Function() onTap;
-  const SnackListWidget({super.key, required this.onTap});
+  const SnackListWidget({
+    super.key,
+  });
 
   @override
   State<SnackListWidget> createState() => _SnackListWidgetState();
@@ -10,10 +12,10 @@ class SnackListWidget extends StatefulWidget {
 
 class _SnackListWidgetState extends State<SnackListWidget> {
   List<Map<String, dynamic>> snacks = [
-    {"nome": "Burger", "img": "assets/images/burger.png"},
-    {"nome": "Chicken", "img": "assets/images/chicken.png"},
+    {"nome": "Burgers", "img": "assets/images/burger.png"},
+    {"nome": "Chinkens", "img": "assets/images/chicken.png"},
     {"nome": "Fries", "img": "assets/images/fries.png"},
-    {"nome": "Drink", "img": "assets/images/drink.png"},
+    {"nome": "Drinks", "img": "assets/images/drink.png"},
   ];
 
   @override
@@ -23,18 +25,34 @@ class _SnackListWidgetState extends State<SnackListWidget> {
       shrinkWrap: true,
       children: snacks.map((s) {
         return GestureDetector(
-            onTap: widget.onTap, child: cardSnacks(s["nome"], s["img"]));
+          onTap: () => _menuPage(s["nome"]),
+          child: cardSnacks(
+            s["nome"],
+            s["img"],
+          ),
+        );
       }).toList(),
+    );
+  }
+
+  _menuPage(String name) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => MenuPage(
+          snack: name,
+        ),
+      ),
     );
   }
 }
 
 Widget cardSnacks(String snack, String urlImage) {
   return Container(
-    margin: EdgeInsets.only(left: 16, right: 20),
+    margin: EdgeInsets.only(left: 16, right: 10),
     padding: EdgeInsets.all(12),
     alignment: Alignment.center,
-    width: 80,
+    width: 90,
     decoration: BoxDecoration(
       color: Colors.white,
       borderRadius: BorderRadius.circular(16),

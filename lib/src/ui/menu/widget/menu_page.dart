@@ -1,8 +1,11 @@
+import 'package:cardapioapp/src/ui/home/viewmodels/home_viewmodel.dart';
 import 'package:cardapioapp/src/ui/widgets/list_itens_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MenuPage extends StatefulWidget {
-  const MenuPage({super.key});
+  final String snack;
+  const MenuPage({super.key, required this.snack});
 
   @override
   State<MenuPage> createState() => _MenuPageState();
@@ -10,31 +13,43 @@ class MenuPage extends StatefulWidget {
 
 class _MenuPageState extends State<MenuPage> {
   @override
+  void initState() {
+    context.read<HomeViewmodel>();
+    context.read<HomeViewmodel>().listSnacks(widget.snack.toLowerCase());
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final viewModel = context.watch<HomeViewmodel>();
     return Scaffold(
+      backgroundColor: Color(0xFFFAFAFA),
+      appBar: AppBar(
         backgroundColor: Color(0xFFFAFAFA),
-        appBar: AppBar(
-          backgroundColor: Color(0xFFFAFAFA),
-          title: Text(
-            "Burgers",
-            style: TextStyle(
-                color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-          centerTitle: true,
-          leading: InkWell(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Icon(Icons.arrow_back_ios),
-          ),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: 10),
-              child: Icon(Icons.shopping_cart),
-            ),
-          ],
+        title: Text(
+          widget.snack,
+          style: TextStyle(
+              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        body: ListItensWidget(name: "",price: 1, description: "", snacks: [],));
+        centerTitle: true,
+        leading: InkWell(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Icon(Icons.arrow_back_ios),
+        ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: Icon(Icons.shopping_cart),
+          ),
+        ],
+      ),
+      body: ListItensWidget(
+        snacks: viewModel.snacks,
+        type: widget.snack,
+      ),
+    );
   }
 
   Widget cardContent() {
