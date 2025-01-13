@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class SnackListWidget extends StatefulWidget {
-  const SnackListWidget({super.key});
+  final void Function() onTap;
+  const SnackListWidget({super.key, required this.onTap});
 
   @override
   State<SnackListWidget> createState() => _SnackListWidgetState();
@@ -21,7 +22,8 @@ class _SnackListWidgetState extends State<SnackListWidget> {
       scrollDirection: Axis.horizontal,
       shrinkWrap: true,
       children: snacks.map((s) {
-        return cardSnacks(s["nome"], s["img"]);
+        return GestureDetector(
+            onTap: widget.onTap, child: cardSnacks(s["nome"], s["img"]));
       }).toList(),
     );
   }
@@ -39,7 +41,12 @@ Widget cardSnacks(String snack, String urlImage) {
     ),
     child: Column(
       children: [
-        Image(image: AssetImage(urlImage), width: 50, height: 50, fit: BoxFit.fitWidth,),
+        Image(
+          image: AssetImage(urlImage),
+          width: 50,
+          height: 50,
+          fit: BoxFit.fitWidth,
+        ),
         Text(
           snack,
           style: TextStyle(

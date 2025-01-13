@@ -4,5 +4,5 @@ Desenvolvimento de app para estudo de conceitos em revisão, para este aplicativ
 - Banco de dados local (SQFLite);
 - Gerenciamento de estado (Provider);
 - Arquitetura recomendada (MVVM);
-- Result pattern;
+- Result pattern e Singleton;
 

@@ -1,36 +1,51 @@
+import 'package:cardapioapp/src/ui/widgets/list_itens_widget.dart';
 import 'package:flutter/material.dart';
 
-class RecomendedListWidget extends StatefulWidget {
-  const RecomendedListWidget({super.key});
+class MenuPage extends StatefulWidget {
+  const MenuPage({super.key});
 
   @override
-  State<RecomendedListWidget> createState() => _RecomendedListWidgetState();
+  State<MenuPage> createState() => _MenuPageState();
 }
 
-class _RecomendedListWidgetState extends State<RecomendedListWidget> {
+class _MenuPageState extends State<MenuPage> {
   @override
   Widget build(BuildContext context) {
-    return GridView.count(
-      shrinkWrap: true,
-      crossAxisCount: 2,
-      mainAxisSpacing: 10,
-      childAspectRatio: (0.75),
-      scrollDirection: Axis.vertical,
-      padding: EdgeInsets.only(left: 16, right: 16,),
-      crossAxisSpacing: 10,
-      children: [cardContent(), cardContent(), cardContent(), cardContent()],
-    );
+    return Scaffold(
+        backgroundColor: Color(0xFFFAFAFA),
+        appBar: AppBar(
+          backgroundColor: Color(0xFFFAFAFA),
+          title: Text(
+            "Burgers",
+            style: TextStyle(
+                color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          centerTitle: true,
+          leading: InkWell(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Icon(Icons.arrow_back_ios),
+          ),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(right: 10),
+              child: Icon(Icons.shopping_cart),
+            ),
+          ],
+        ),
+        body: ListItensWidget(name: "",price: 1, description: "", snacks: [],));
   }
 
   Widget cardContent() {
     return Container(
-      padding: EdgeInsets.all(10),  
+      padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         spacing: 2,
@@ -57,7 +72,9 @@ class _RecomendedListWidgetState extends State<RecomendedListWidget> {
             style: TextStyle(
                 fontSize: 10, fontWeight: FontWeight.w500, color: Colors.grey),
           ),
-          SizedBox(height: 6,),
+          SizedBox(
+            height: 6,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
